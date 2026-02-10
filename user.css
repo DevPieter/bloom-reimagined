@@ -1,0 +1,137 @@
+:root {
+  /* Border */
+  --default-border-thickness: 2px;
+  --border-radius-1: 0.75rem;
+  --border-radius-2: 0.5rem;
+  --border-radius-3: 0.5rem;
+
+  --blur-radius: 2rem;
+
+  --card-gap: 0.5rem;
+  --glue-font-weight-normal: 400;
+  --glue-font-weight-bold: 600;
+  --glue-font-weight-black: 700;
+  --scrollbars: unset;
+  --scrollbar-vertical-size: 6px;
+  --filter-brightness: 1;
+  --green: #00ffa1;
+  --ms-motion-timing-decelerate: cubic-bezier(0.1, 0.9, 0.2, 1);
+
+  /* Play Bar */
+  --now-playing-bar-margin: 0.8rem;
+  --now-playing-bar-height: 5.625rem;
+  --padding-now-playing-bar: 0.25rem;
+  --border-radius-now-playing-bar: 0.5rem;
+
+  --shadow-rgb: rgba(var(--spice-rgb-subtext), 0.125);
+  --text-subdued: var(--spice-subtext);
+}
+
+* {
+  font-family: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", "Microsoft Ya Hei", sans-serif !important;
+  box-shadow: none !important;
+
+  --text-subdued: rgba(var(--spice-rgb-subtext), 0.7) !important;
+  --section-background-base: var(--spice-card) !important;
+  --lyrics-color-background: rgb(0, 0, 0, 0) !important;
+}
+
+html {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.Root__top-container {
+  /* Only gap left and right, not top and bottom */
+  /* --panel-gap is the default gap between panels, provided by Spotify */
+  gap: 0 var(--panel-gap) !important;
+  padding-bottom: 0 !important;
+}
+
+#global-nav-bar {
+  /* The default margin is calculated based on the --panel-gap, this removes the bottom margin to avoid overlapping with the elements below */
+  margin-bottom: 0 !important;
+}
+
+.main-home-homeHeader {
+  /* Remove the default dynamic background gradient */
+  display: none;
+}
+
+.main-home-filterChipsContainer {
+  display: flex;
+  justify-content: center;
+
+  margin: 0 var(--now-playing-bar-margin) 0 var(--now-playing-bar-margin);
+  width: calc(100% - (var(--now-playing-bar-margin) * 2));
+
+  background: unset !important;
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25) !important;
+
+  position: sticky;
+  top: var(--now-playing-bar-margin);
+  left: 0;
+}
+
+.main-home-filterChipsSection {
+  /* The default opacity changes on user scroll, this prevents that */
+  opacity: 1 !important;
+
+  position: absolute;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: var(--border-radius-now-playing-bar);
+  padding: var(--padding-now-playing-bar);
+
+  bottom: var(--now-playing-bar-margin);
+  border: var(--default-border-thickness) solid var(--shadow-rgb);
+
+  background-color: rgba(var(--spice-rgb-main), 0.5);
+  backdrop-filter: blur(var(--blur-radius)) saturate(1) brightness(100%);
+}
+
+.main-home-filterChipsSection::after {
+  /* Remove the default dynamic background color */
+  display: none;
+}
+
+.view-homeShortcutsGrid-shortcut {
+  border: var(--default-border-thickness) solid var(--shadow-rgb);
+  border-radius: var(--border-radius-1);
+}
+
+.Root__now-playing-bar {
+  display: flex;
+  justify-content: center;
+
+  margin: 0 var(--now-playing-bar-margin) 0 var(--now-playing-bar-margin);
+  width: calc(100% - (var(--now-playing-bar-margin) * 2));
+
+  background: unset !important;
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25) !important;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.main-nowPlayingBar-container {
+  position: absolute;
+  justify-content: center;
+
+  width: 100%;
+  height: var(--now-playing-bar-height);
+
+  border-radius: var(--border-radius-now-playing-bar);
+  padding: var(--padding-now-playing-bar);
+
+  bottom: var(--now-playing-bar-margin);
+  border: var(--default-border-thickness) solid var(--shadow-rgb);
+
+  background-color: rgba(var(--spice-rgb-main), 0.5);
+  backdrop-filter: blur(var(--blur-radius)) saturate(1) brightness(100%);
+}
