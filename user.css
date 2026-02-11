@@ -65,7 +65,6 @@ html {
   width: calc(100% - (var(--now-playing-bar-margin) * 2));
 
   background: unset !important;
-  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25) !important;
 
   position: sticky;
   top: var(--now-playing-bar-margin);
@@ -75,9 +74,6 @@ html {
 .main-home-filterChipsSection {
   /* The default opacity changes on user scroll, this prevents that */
   opacity: 1 !important;
-
-  position: absolute;
-  justify-content: center;
 
   width: 100%;
   height: 100%;
@@ -103,32 +99,27 @@ html {
 }
 
 .Root__now-playing-bar {
+  position: absolute;
+  bottom: var(--now-playing-bar-margin);
+
+  /* These are set dynamically
+    - width
+    - left
+  */
+
+  padding: 0 !important;
+  margin: 0 !important;
+
   display: flex;
   justify-content: center;
 
-  margin: 0 var(--now-playing-bar-margin) 0 var(--now-playing-bar-margin);
-  width: calc(100% - (var(--now-playing-bar-margin) * 2));
-
   background: unset !important;
-  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25) !important;
-
-  position: fixed;
-  bottom: 0;
-  left: 0;
 }
 
 .main-nowPlayingBar-container {
-  position: absolute;
-
-  display: flex;
-  justify-content: center;
-
   width: 100%;
 
   border-radius: var(--border-radius-now-playing-bar);
-  padding: var(--padding-now-playing-bar);
-
-  bottom: var(--now-playing-bar-margin);
   border: var(--default-border-thickness) solid var(--shadow-rgb);
 
   background-color: rgba(var(--spice-rgb-main), 0.5);
