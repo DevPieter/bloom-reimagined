@@ -53,7 +53,10 @@
     [".Root__now-playing-bar", ".Root__main-view"],
     ([_, mainView]) => {
       alignNowPlayingBar();
-      new ResizeObserver(() => alignNowPlayingBar()).observe(mainView);
+      new ResizeObserver(() => {
+        alignNowPlayingBar();
+        alignNotificationContainer();
+      }).observe(mainView);
     }
   );
 
@@ -65,7 +68,18 @@
     if (!nowPlayingBar || !mainView) return;
 
     nowPlayingBar.style.width = `calc(${mainView.clientWidth}px - calc(var(--now-playing-bar-margin) * 2))`;
-    nowPlayingBar.style.left = `calc(${mainView.getBoundingClientRect().left}px + var(--now-playing-bar-margin))`;
+    nowPlayingBar.style.left = `calc(${mainView.getBoundingClientRect().left}px + var(--now-playing-bar-margin) - var(--panel-gap))`;
+  };
+
+  const alignNotificationContainer = () => {
+    // Move the notification container to be above the now playing bar and aligned with the main content
+    const notificationContainer = document.querySelector(".notistack-SnackbarContainer");
+    const nowPlayingBar = document.querySelector(".Root__now-playing-bar");
+
+    if (!notificationContainer || !nowPlayingBar) return;
+
+    notificationContainer.style.left = `calc(${nowPlayingBar.getBoundingClientRect().left}px)`;
+    notificationContainer.style.bottom = `calc(${nowPlayingBar.clientHeight}px + var(--now-playing-bar-margin))`;
   };
 
   /* == Content spacers == */
@@ -91,6 +105,8 @@
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (!(node instanceof HTMLElement)) continue;
+
+        if (node.matches(".notistack-SnackbarContainer")) alignNotificationContainer();
 
         for (const spacer of registeredSpacers) {
           if (node.matches?.(spacer.nodeSelector)) ensureContentSpacer(node, spacer.id, spacer.height, spacer.prepend, spacer.waitForSelector);

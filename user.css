@@ -137,3 +137,28 @@ html {
 
   border-radius: var(--border-radius-2);
 }
+
+.notistack-SnackbarContainer {
+  position: absolute !important;
+  align-items: start !important;
+  transition: unset !important;
+  transform: unset !important;
+  width: fit-content !important;
+
+  /* These are set dynamically
+    - width
+    - left
+  */
+}
+
+.notistack-Snackbar>div>div {
+  border: var(--default-border-thickness) solid var(--shadow-rgb);
+  border-radius: var(--border-radius-3);
+
+  background-color: rgba(var(--spice-rgb-main), 0.5);
+  backdrop-filter: blur(var(--blur-radius)) saturate(1) brightness(100%);
+}
+
+.notistack-Snackbar>div>div span {
+  color: var(--spice-text) !important;
+}
