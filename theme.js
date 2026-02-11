@@ -19,20 +19,41 @@
     ([searchButton, navLinksContainer]) => navLinksContainer.appendChild(searchButton)
   );
 
-  const MHC_SPACER_ID = "main-home-content__top-spacer";
+  const registeredSpacers = new Set();
+
+  registeredSpacers.add({
+    id: "main-home-content__spacer",
+    nodeSelector: ".main-home-content",
+    height: "8px",
+    prepend: true
+  });
+
+  registeredSpacers.add({
+    id: "main-yourLibraryX-libraryRootlist__spacer",
+    nodeSelector: ".main-yourLibraryX-libraryRootlist",
+    height: "100px",
+    prepend: false
+  });
+
+  // Right sidebar (now playing, queue, etc.)
+  registeredSpacers.add({
+    id: "iHa_q9pq4un3VNRQgwTx__spacer",
+    nodeSelector: ".iHa_q9pq4un3VNRQgwTx",
+    height: "50px",
+    prepend: false
+  });
 
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (!(node instanceof HTMLElement)) continue;
 
-        if (node.matches?.(".main-home-content")) {
-          ensureMainHomeContentSpacer(node);
-          continue;
-        }
+        for (const spacer of registeredSpacers) {
+          if (node.matches?.(spacer.nodeSelector)) ensureContentSpacer(node, spacer.id, spacer.height, spacer.prepend);
 
-        const inner = node.querySelector?.(".main-home-content");
-        if (inner) ensureMainHomeContentSpacer(inner);
+          const innerNode = node.querySelector?.(spacer.nodeSelector);
+          if (innerNode) ensureContentSpacer(innerNode, spacer.id, spacer.height, spacer.prepend);
+        }
       }
     }
   });
@@ -42,15 +63,15 @@
     subtree: true
   });
 
-  function ensureMainHomeContentSpacer(node) {
-    if (!node || node.querySelector(`#${MHC_SPACER_ID}`)) return;
+  function ensureContentSpacer(node, id, height, prepend) {
+    if (!node || node.querySelector(`#${id}`)) return;
 
     const spacer = document.createElement("div");
-    spacer.id = MHC_SPACER_ID;
-    spacer.style.height = "8px";
+    spacer.id = id;
+    spacer.style.height = height;
     spacer.style.flexShrink = "0";
 
-    node.prepend(spacer);
-    console.debug("Added main home content spacer");
+    if (prepend) node.prepend(spacer);
+    else node.appendChild(spacer);
   }
 })();
